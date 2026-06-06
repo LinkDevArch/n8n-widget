@@ -66,7 +66,6 @@
 
     const state = {
       isLoading: false,
-      messages: [],
       sessionId: getSessionId(config.storageKey)
     };
 
@@ -123,7 +122,6 @@
     if (config.tooltipTextColor) widget.style.setProperty("--chat-tooltip-text", config.tooltipTextColor);
 
     addMessage(messagesEl, "bot", config.welcomeMessage);
-    state.messages.push({ role: "assistant", content: config.welcomeMessage });
 
     if (config.initialOpen) {
       widget.classList.add("is-open");
@@ -179,7 +177,6 @@
       input.value = "";
       input.style.height = "auto";
       addMessage(messagesEl, "user", message);
-      state.messages.push({ role: "user", content: message });
       setLoading(true);
       const typing = addTyping(messagesEl);
 
@@ -190,8 +187,7 @@
           {
             message,
             sessionId: state.sessionId,
-            chatInput: message,
-            history: state.messages
+            chatInput: message
           },
           config.authHeaderName,
           config.authHeaderValue
@@ -199,7 +195,6 @@
         const reply = extractReply(response);
         typing.remove();
         addMessage(messagesEl, "bot", reply);
-        state.messages.push({ role: "assistant", content: reply });
       } catch (error) {
         typing.remove();
         addMessage(
@@ -266,7 +261,6 @@
       body.set("message", payload.message);
       body.set("chatInput", payload.chatInput);
       body.set("sessionId", payload.sessionId);
-      body.set("history", JSON.stringify(payload.history));
     }
 
     return { headers, body };

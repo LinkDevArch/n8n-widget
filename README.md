@@ -25,17 +25,13 @@ Campos enviados:
 {
   "message": "Mensaje del usuario",
   "chatInput": "Mensaje del usuario",
-  "sessionId": "id-persistente-del-navegador",
-  "history": [
-    { "role": "assistant", "content": "Hola..." },
-    { "role": "user", "content": "Mensaje del usuario" }
-  ]
+  "sessionId": "id-persistente-del-navegador"
 }
 ```
 
 `chatInput` se incluye porque muchos flujos de n8n Chat Trigger usan ese nombre.
 
-En n8n, lee estos valores desde el body del Webhook node. `history` llega como string JSON; si lo necesitas como arreglo, parsealo en un Code node.
+En n8n, lee estos valores desde el body del Webhook node o el Chat Trigger.
 
 Si tu servidor maneja correctamente `OPTIONS`, puedes enviar JSON agregando:
 
