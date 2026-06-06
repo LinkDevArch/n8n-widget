@@ -25,7 +25,7 @@ Campos enviados:
 {
   "message": "Mensaje del usuario",
   "chatInput": "Mensaje del usuario",
-  "sessionId": "id-persistente-del-navegador"
+  "sessionId": "id-de-la-sesion"
 }
 ```
 

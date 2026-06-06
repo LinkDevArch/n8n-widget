@@ -66,7 +66,7 @@
 
     const state = {
       isLoading: false,
-      sessionId: getSessionId(config.storageKey)
+      sessionId: getSessionId()
     };
 
     const widget = buildWidget(config);
@@ -439,15 +439,9 @@
     return typing;
   }
 
-  function getSessionId(storageKey) {
+  function getSessionId() {
     try {
-      const current = window.localStorage.getItem(storageKey);
-      if (current) {
-        return current;
-      }
-      const next = crypto.randomUUID ? crypto.randomUUID() : String(Date.now());
-      window.localStorage.setItem(storageKey, next);
-      return next;
+      return crypto.randomUUID ? crypto.randomUUID() : String(Date.now());
     } catch (_) {
       return String(Date.now());
     }
