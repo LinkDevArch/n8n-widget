@@ -7,7 +7,7 @@
     placeholder: "Escribe tu mensaje...",
     primaryColor: "#2563eb",
     initialOpen: false,
-    requestFormat: "form",
+    requestFormat: "json",
     storageKey: "n8n-chat-session-id",
     authHeaderName: "Authorization",
     authHeaderValue: "",
