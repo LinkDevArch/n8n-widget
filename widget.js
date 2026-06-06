@@ -205,7 +205,7 @@
         addMessage(
           messagesEl,
           "bot error",
-          "No pude conectar con el webhook. Revisa la URL, CORS y la respuesta del flujo."
+          "Error al conectar, intente mas tarde."
         );
         console.error("N8NChatWidget:", error);
       } finally {
