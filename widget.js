@@ -69,6 +69,22 @@
       sessionId: getSessionId(config.storageKey)
     };
 
+    const historyKey = `${config.storageKey}-messages`;
+    let savedHistory = [];
+    try {
+      const stored = window.sessionStorage.getItem(historyKey);
+      if (stored) {
+        savedHistory = JSON.parse(stored);
+      }
+    } catch (_) {}
+
+    function saveMessage(type, text) {
+      savedHistory.push({ type, text });
+      try {
+        window.sessionStorage.setItem(historyKey, JSON.stringify(savedHistory));
+      } catch (_) {}
+    }
+
     const widget = buildWidget(config);
     const panel = widget.querySelector(`.${SELECTORS.panel}`);
     const messagesEl = widget.querySelector(`.${SELECTORS.messages}`);
@@ -121,7 +137,14 @@
     if (config.tooltipBg) widget.style.setProperty("--chat-tooltip-bg", config.tooltipBg);
     if (config.tooltipTextColor) widget.style.setProperty("--chat-tooltip-text", config.tooltipTextColor);
 
-    addMessage(messagesEl, "bot", config.welcomeMessage);
+    if (savedHistory.length > 0) {
+      savedHistory.forEach((msg) => {
+        addMessage(messagesEl, msg.type, msg.text);
+      });
+    } else {
+      addMessage(messagesEl, "bot", config.welcomeMessage);
+      saveMessage("bot", config.welcomeMessage);
+    }
 
     if (config.initialOpen) {
       widget.classList.add("is-open");
@@ -177,6 +200,7 @@
       input.value = "";
       input.style.height = "auto";
       addMessage(messagesEl, "user", message);
+      saveMessage("user", message);
       setLoading(true);
       const typing = addTyping(messagesEl);
 
@@ -195,6 +219,7 @@
         const reply = extractReply(response);
         typing.remove();
         addMessage(messagesEl, "bot", reply);
+        saveMessage("bot", reply);
       } catch (error) {
         typing.remove();
         addMessage(
@@ -202,6 +227,7 @@
           "bot error",
           "Error al conectar, intente mas tarde."
         );
+        saveMessage("bot error", "Error al conectar, intente mas tarde.");
         console.error("N8NChatWidget:", error);
       } finally {
         setLoading(false);
