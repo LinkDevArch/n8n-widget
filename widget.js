@@ -664,6 +664,7 @@
       }
 
       .n8n-chat-avatar {
+        position: relative;
         width: var(--chat-avatar-size);
         height: var(--chat-avatar-size);
         display: grid;
@@ -681,6 +682,9 @@
       }
 
       .n8n-chat-avatar-img {
+        position: absolute;
+        top: 0;
+        left: 0;
         width: 100%;
         height: 100%;
         object-fit: var(--chat-avatar-fit, cover);
@@ -958,6 +962,7 @@
       }
 
       .n8n-chat-toggle {
+        position: relative;
         width: var(--chat-toggle-size);
         height: var(--chat-toggle-size);
         display: grid;
@@ -1000,6 +1005,9 @@
       }
 
       .n8n-chat-toggle-img {
+        position: absolute;
+        top: 0;
+        left: 0;
         width: 100%;
         height: 100%;
         object-fit: var(--chat-toggle-fit, contain);
